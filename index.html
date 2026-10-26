@@ -1,0 +1,673 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="The Art Kings Academy : BJJ, Judo, MMA, Lutte, Kickboxing, Boxe, Cross Training et Aérobic. Planning, coachs et test d'orientation.">
+<link rel="icon" href="media/logo.png">
+<title>The Art Kings Academy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@500;600;700&family=Cairo:wght@400;600;700;900&display=swap">
+<style>
+/* Layout: fixed nav → 3D octagon hero → discipline "reels" (video + coach cutout, autoplay on view) → women → kids → interactive planning → quiz → animated location. Committed dark "black mat" look. */
+:root{
+  --bg:#0a0a0b; --surface:#141416; --surface2:#1c1c1f; --line:#2b2b30; --ink:#f3f1ee; --muted:#9b9aa3; --red:#e3261c; --red2:#ff4b3e;
+  --display:"Anton","Impact","Arial Narrow Bold",sans-serif;
+  --body:"Barlow",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --label:"Barlow Condensed","Arial Narrow",system-ui,sans-serif;
+  --brand:"Anton","Impact","Arial Narrow Bold",sans-serif; --dw:400;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.55;overflow-x:hidden}
+img,video{max-width:100%;display:block}
+a{color:inherit}
+.gut{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:1200px;margin:0 auto}
+.lab{font-family:var(--label);font-weight:600;letter-spacing:.16em;text-transform:uppercase;font-size:13px;color:var(--red2)}
+h2.big{font-family:var(--display);font-weight:var(--dw);font-size:clamp(44px,8vw,104px);line-height:.9;margin:6px 0 0;text-transform:uppercase;text-wrap:balance;letter-spacing:.01em}
+.sub{color:var(--muted);max-width:58ch;margin:14px 0 0}
+section{scroll-margin-top:70px}
+:focus-visible{outline:3px solid var(--red2);outline-offset:3px}
+
+/* nav */
+.nav{position:fixed;inset:0 0 auto;z-index:50;padding-top:env(safe-area-inset-top,0px);background:color-mix(in srgb,var(--bg) 78%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid color-mix(in srgb,var(--line) 60%,transparent)}
+.nav .in{display:flex;align-items:center;justify-content:space-between;gap:16px;height:62px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-family:var(--label);font-weight:700;letter-spacing:.12em;text-transform:uppercase;font-size:15px}
+.brand img{width:38px;height:38px;border-radius:50%}
+.links{display:flex;gap:22px;font-family:var(--label);font-weight:600;letter-spacing:.1em;text-transform:uppercase;font-size:14px}
+.links a{text-decoration:none;color:var(--muted)}
+.links a:hover{color:var(--ink)}
+.cta{font-family:var(--label);font-weight:700;letter-spacing:.1em;text-transform:uppercase;font-size:14px;background:var(--red);color:#fff;padding:10px 16px;border-radius:3px;text-decoration:none;white-space:nowrap}
+.cta:hover{background:var(--red2)}
+@media (max-width:900px){.links{display:none}}
+@media (max-width:440px){.brand span{display:none}}
+
+/* hero */
+.hero{position:relative;height:clamp(560px,86vh,820px);overflow:hidden;background:radial-gradient(ellipse at 50% 70%,#2a0b09 0%,var(--bg) 62%)}
+#octa{position:absolute;inset:0;width:100%;height:100%}
+.hero .copy{position:absolute;left:0;right:0;bottom:0;padding-bottom:44px;pointer-events:none}
+.hero h1{font-family:var(--display);font-weight:var(--dw);text-transform:uppercase;margin:0;line-height:.86;font-size:clamp(58px,13vw,176px);letter-spacing:.005em}
+.hero h1 .o{color:transparent;-webkit-text-stroke:2px var(--ink)}
+.hero h1 .r{color:var(--red)}
+.hero .row{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;margin-top:18px}
+.hero p{margin:0;color:#d6d3cf;max-width:44ch;font-size:18px}
+.hero .btns{display:flex;gap:10px;flex-wrap:wrap;pointer-events:auto}
+.ghost{font-family:var(--label);font-weight:700;letter-spacing:.1em;text-transform:uppercase;font-size:14px;border:1.5px solid var(--ink);padding:10px 16px;border-radius:3px;text-decoration:none}
+.ghost:hover{background:var(--ink);color:var(--bg)}
+
+/* ticker */
+.ticker{border-block:1px solid var(--line);overflow:hidden;background:var(--red);color:#fff}
+.ticker .t{display:flex;gap:40px;width:max-content;padding:12px 0;font-size:26px;text-transform:uppercase;animation:tick 32s linear infinite}
+.ticker .t span::after{content:"✕";margin-left:40px;font-size:16px;vertical-align:middle;opacity:.7}
+@keyframes tick{to{transform:translateX(-50%)}}
+
+/* mats intro */
+.mats{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:34px}
+.mat{position:relative;border-radius:4px;padding:26px;min-height:200px;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;gap:6px;text-decoration:none}
+.mat.w{background:#ecebe8;color:#0c0c0d}
+.mat.b{background:#000;border:1px solid var(--line)}
+.mat h3{font-family:var(--display);font-weight:var(--dw);font-size:clamp(40px,6vw,64px);line-height:.9;margin:0;text-transform:uppercase}
+.mat h3 span{color:transparent;-webkit-text-stroke:1.5px currentColor}
+.mat.w h3 span{-webkit-text-stroke-color:#0c0c0d}
+.mat.b h3 span{-webkit-text-stroke-color:var(--ink)}
+.mat .k{font-family:var(--label);letter-spacing:.14em;text-transform:uppercase;font-weight:600;font-size:13px;opacity:.75}
+.mat .pills{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.mat .pills b{font-family:var(--label);font-weight:600;font-size:13px;letter-spacing:.06em;padding:4px 9px;border-radius:2px;border:1px solid currentColor;opacity:.85}
+.mat::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0 79px,currentColor 79px 80px);opacity:.06}
+@media (max-width:700px){.mats{grid-template-columns:1fr}}
+
+/* discipline reels */
+.disc{position:relative;padding-block:84px;border-top:1px solid var(--line);overflow:hidden}
+.disc .ghostword{position:absolute;top:28px;inset-inline-end:-10px;font-family:var(--display);text-transform:uppercase;font-size:clamp(90px,18vw,250px);line-height:.8;color:transparent;-webkit-text-stroke:1px color-mix(in srgb,var(--ink) 13%,transparent);white-space:nowrap;pointer-events:none;user-select:none}
+.disc .grid{position:relative;display:grid;grid-template-columns:minmax(0,1.55fr) minmax(0,1fr);gap:34px;align-items:center}
+.disc .head{grid-column:1/-1;display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap}
+.disc h2{font-family:var(--display);font-weight:var(--dw);font-size:clamp(44px,7vw,92px);text-transform:uppercase;line-height:.9;margin:4px 0 0}
+.tagl{font-family:var(--label);font-size:20px;font-weight:600;color:var(--muted)}
+.matbadge{font-family:var(--label);font-weight:700;letter-spacing:.14em;text-transform:uppercase;font-size:12px;padding:6px 10px;border-radius:2px}
+.matbadge.white{background:#ecebe8;color:#0c0c0d}
+.matbadge.black{background:#000;color:var(--ink);border:1px solid #444}
+.vframe{position:relative;border-radius:4px;overflow:hidden;background:#000;box-shadow:0 30px 80px -30px rgba(227,38,28,.45);transform-style:preserve-3d;transition:transform .5s cubic-bezier(.2,.7,.2,1)}
+.vframe video{width:100%;aspect-ratio:16/9;object-fit:cover;background:#000}
+.vframe.v video{aspect-ratio:9/16}
+.vframe .live{position:absolute;top:12px;left:12px;font-family:var(--label);font-weight:700;letter-spacing:.14em;font-size:12px;text-transform:uppercase;background:rgba(0,0,0,.6);padding:5px 9px;border-radius:2px;display:flex;align-items:center;gap:7px}
+.vframe .live i{width:8px;height:8px;border-radius:50%;background:var(--red2);animation:pulse 1.4s infinite}
+@keyframes pulse{50%{opacity:.25}}
+.snd{position:absolute;right:12px;bottom:12px;width:42px;height:42px;border-radius:50%;border:0;background:rgba(0,0,0,.65);color:#fff;display:grid;place-items:center;cursor:pointer}
+.snd:hover{background:var(--red)}
+.snd svg{width:20px;height:20px}
+.coachcol{position:relative;display:flex;flex-direction:column;gap:16px}
+.coach{position:relative;perspective:900px;height:clamp(300px,36vw,460px)}
+.coach .ring{position:absolute;left:50%;bottom:0;width:86%;aspect-ratio:1;transform:translateX(-50%);border-radius:50%;background:radial-gradient(circle at 50% 60%,color-mix(in srgb,var(--c) 55%,transparent),transparent 66%)}
+.coach img{position:absolute;left:50%;bottom:0;height:100%;width:auto;max-width:none;transform:translateX(-50%) rotateY(var(--ry,0deg)) rotateX(var(--rx,0deg));transform-origin:50% 100%;filter:drop-shadow(0 18px 30px rgba(0,0,0,.7));transition:transform .25s ease-out}
+.coach .floor{position:absolute;left:8%;right:8%;bottom:-2px;height:2px;background:linear-gradient(90deg,transparent,var(--c),transparent)}
+.cname{display:flex;flex-direction:column;gap:2px;min-width:0}
+.cname b{overflow-wrap:anywhere}
+.cname small{font-family:var(--label);letter-spacing:.16em;text-transform:uppercase;font-weight:600;font-size:12px;color:var(--muted)}
+.cname b{font-family:var(--display);font-weight:var(--dw);font-size:40px;line-height:1;text-transform:uppercase}
+.desc{color:#cfccc8;margin:0;max-width:54ch}
+.slots{display:flex;flex-wrap:wrap;gap:6px}
+.slot{font-family:var(--label);font-weight:600;font-size:14px;letter-spacing:.03em;padding:6px 10px;border-radius:2px;background:var(--surface2);border:1px solid var(--line);font-variant-numeric:tabular-nums;max-width:100%}
+.slot em{font-style:normal;color:var(--c);margin-right:6px}
+.disc .info{grid-column:1/-1;display:grid;grid-template-columns:minmax(0,1.55fr) minmax(0,1fr);gap:34px;align-items:start}
+@media (max-width:860px){
+ .disc .grid,.disc .info{grid-template-columns:minmax(0,1fr);gap:20px}
+ .disc h2{overflow-wrap:anywhere}
+ .coachcol{flex-direction:row;align-items:flex-end;gap:12px}
+ .coach{height:260px;flex:0 0 52%}
+}
+
+/* reveal (only applied to elements below the fold at load) */
+.pre{opacity:0;transform:translateY(40px)}
+.rv{transition:opacity .8s ease,transform .8s cubic-bezier(.2,.7,.2,1)}
+.coach.pre img{transform:translateX(-50%) translateY(60px) rotateY(-25deg)}
+
+/* women & kids */
+.band{padding-block:90px;border-top:1px solid var(--line)}
+.women{background:linear-gradient(180deg,#160810,var(--bg) 70%)}
+.reelrow{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr));gap:22px;margin-top:40px;align-items:start}
+.reel{display:flex;flex-direction:column;gap:12px}
+.reel .vframe{border-radius:18px;border:6px solid #1d1d20;max-width:320px}
+.reel h3{font-family:var(--display);font-weight:var(--dw);font-size:30px;text-transform:uppercase;margin:0;line-height:1}
+.mono{position:relative;width:min(100%,300px);aspect-ratio:3/4;border-radius:4px;overflow:hidden;background:#0e0e10;display:grid;place-items:center;border:1px solid var(--line)}
+.mono .sweep{position:absolute;inset:-40%;background:conic-gradient(from 0deg,transparent 0 70%,#ff2bc2 80%,var(--red2) 88%,transparent 95%);animation:spin 6s linear infinite;opacity:.55}
+.mono::after{content:"";position:absolute;inset:3px;background:#0e0e10;border-radius:3px}
+.mono span{position:relative;z-index:2;font-family:var(--display);font-size:200px;line-height:1;color:transparent;-webkit-text-stroke:2px #ff5ad7;animation:breathe 4s ease-in-out infinite}
+.mono small{position:absolute;z-index:2;bottom:18px;font-family:var(--label);letter-spacing:.2em;text-transform:uppercase;font-weight:700;font-size:13px;color:var(--muted)}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes breathe{50%{transform:scale(1.06);-webkit-text-stroke-color:var(--red2)}}
+.kids{background:linear-gradient(180deg,#0b1012,var(--bg) 70%)}
+.kidtable{display:grid;gap:8px;margin-top:6px}
+.kidtable div{display:grid;grid-template-columns:110px minmax(0,1fr);gap:10px;align-items:baseline;padding:10px 0;border-bottom:1px solid var(--line)}
+.kidtable b{font-family:var(--display);font-weight:var(--dw);font-size:24px}
+.kidtable span{color:#cfccc8;font-variant-numeric:tabular-nums}
+
+/* planning */
+.plan{padding-block:90px;border-top:1px solid var(--line)}
+.ctrl{display:flex;flex-wrap:wrap;gap:8px;margin-top:30px}
+.tab{all:unset;cursor:pointer;font-family:var(--label);font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:15px;padding:10px 14px;border:1.5px solid var(--line);border-radius:3px;color:var(--muted)}
+.tab[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.tab .today{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--red2);margin-left:6px;vertical-align:middle}
+.filters .tab{font-size:13px;padding:7px 11px}
+.sessions{display:grid;gap:8px;margin-top:22px}
+.sess{display:grid;grid-template-columns:120px 6px minmax(0,1fr) auto;gap:16px;align-items:center;padding:14px 16px;background:var(--surface);border:1px solid var(--line);border-radius:3px}
+.sess .tm{font-family:var(--label);font-weight:700;font-size:18px;font-variant-numeric:tabular-nums}
+.sess .bar{height:100%;min-height:34px;border-radius:2px;background:var(--c)}
+.sess .nm{font-weight:600}
+.sess .nm small{display:block;color:var(--muted);font-weight:400;font-size:14px}
+.empty{color:var(--muted);padding:24px 0}
+@media (max-width:600px){.sess{grid-template-columns:auto 5px minmax(0,1fr);gap:12px}.sess .matbadge{grid-column:3}}
+
+/* quiz */
+.quiz{padding-block:90px;border-top:1px solid var(--line);background:radial-gradient(ellipse at 80% 0%,#220807,var(--bg) 55%)}
+.qcard{margin-top:34px;background:var(--surface);border:1px solid var(--line);border-radius:4px;padding:clamp(18px,4vw,36px);display:flex;flex-direction:column;gap:20px;max-width:820px}
+.belt{display:grid;grid-template-columns:repeat(8,1fr);gap:4px}
+.belt span{height:8px;border-radius:1px;background:var(--line)}
+.qn{font-family:var(--label);font-weight:600;letter-spacing:.14em;text-transform:uppercase;font-size:13px;color:var(--muted)}
+.qcard h3{font-family:var(--display);font-weight:var(--dw);font-size:clamp(30px,5vw,48px);line-height:1;margin:0;text-transform:uppercase;text-wrap:balance}
+.opts{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr))}
+.opt{all:unset;box-sizing:border-box;cursor:pointer;display:flex;gap:14px;align-items:center;padding:16px;border:1.5px solid var(--line);border-radius:3px;background:var(--surface2);font-weight:500;transition:border-color .15s,transform .15s}
+.opt:hover{border-color:var(--ink);transform:translateY(-2px)}
+.opt[aria-pressed="true"]{border-color:var(--red);background:color-mix(in srgb,var(--red) 16%,var(--surface2))}
+.opt .k{flex:none;width:30px;height:30px;border-radius:50%;border:1.5px solid var(--line);display:grid;place-items:center;font-family:var(--label);font-weight:700;color:var(--muted)}
+.opt[aria-pressed="true"] .k{background:var(--red);border-color:var(--red);color:#fff}
+.qnav{display:flex;justify-content:space-between;gap:10px}
+.btn{all:unset;cursor:pointer;font-family:var(--label);font-weight:700;letter-spacing:.1em;text-transform:uppercase;font-size:14px;padding:11px 18px;border-radius:3px;border:1.5px solid var(--ink)}
+.btn.red{background:var(--red);border-color:var(--red);color:#fff}
+.btn[disabled]{opacity:.3;cursor:not-allowed}
+.result{margin-top:34px;display:grid;gap:22px}
+.rtop{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:28px;align-items:end;background:var(--surface);border:1px solid var(--line);border-radius:4px;padding:clamp(16px,3vw,30px)}
+.rtop h3{font-family:var(--display);font-weight:var(--dw);font-size:clamp(46px,8vw,96px);line-height:.88;margin:4px 0 8px;text-transform:uppercase}
+.pct{font-family:var(--label);font-weight:700;font-size:18px;color:var(--red2);letter-spacing:.06em}
+.rside{display:flex;flex-direction:column;gap:14px}
+.rside .coach{height:300px}
+.rtop .vframe.v{max-width:360px}
+.others{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:12px}
+.oth{background:var(--surface);border:1px solid var(--line);border-radius:3px;padding:16px;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.oth b{font-family:var(--display);font-weight:var(--dw);font-size:24px;text-transform:uppercase}
+.oth span{font-family:var(--label);font-weight:700;color:var(--muted);font-variant-numeric:tabular-nums}
+@media (max-width:860px){.rtop .vframe.v{max-width:300px}.rtop{grid-template-columns:minmax(0,1fr)}.rside .coach{height:240px}}
+
+/* location */
+.loc{padding-block:90px;border-top:1px solid var(--line)}
+.locgrid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:34px;align-items:center;margin-top:34px}
+.radar{position:relative;aspect-ratio:1;max-width:520px;width:100%;border-radius:50%;background:radial-gradient(circle,#1a0c0b,#0b0b0c 70%);border:1px solid var(--line);overflow:hidden}
+.radar svg{position:absolute;inset:0;width:100%;height:100%}
+.radar .streets path{fill:none;stroke:#3a3a40;stroke-width:1.2;stroke-dasharray:600;stroke-dashoffset:600;animation:draw 3s ease forwards}
+.radar .scan{position:absolute;inset:0;background:conic-gradient(from 0deg,transparent 0 82%,rgba(227,38,28,.35) 100%);animation:spin 5s linear infinite;border-radius:50%}
+.radar .pin{position:absolute;left:50%;top:50%;transform:translate(-50%,-100%)}
+.radar .pin svg{position:static;width:46px;height:46px;animation:drop 1.2s cubic-bezier(.3,1.6,.5,1) both .6s}
+.radar .wave{position:absolute;left:50%;top:50%;width:20px;height:20px;margin:-10px;border-radius:50%;border:2px solid var(--red2);animation:wave 2.4s ease-out infinite}
+.radar .wave:nth-child(2){animation-delay:.8s}.radar .wave:nth-child(3){animation-delay:1.6s}
+@keyframes draw{to{stroke-dashoffset:0}}
+@keyframes drop{from{transform:translateY(-120px);opacity:0}}
+@keyframes wave{to{transform:scale(14);opacity:0}}
+.hours{display:grid;gap:4px;margin:20px 0 26px}
+.hours div{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid var(--line);font-variant-numeric:tabular-nums}
+.hours b{font-family:var(--label);font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+@media (max-width:860px){.locgrid{grid-template-columns:1fr}}
+
+footer{border-top:1px solid var(--line);padding-block:40px calc(40px + env(safe-area-inset-bottom,0px));color:var(--muted)}
+footer .in{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+footer .motto{font-family:var(--display);font-weight:var(--dw);font-size:28px;text-transform:uppercase;color:var(--ink)}
+
+
+/* language toggle + Arabic / RTL */
+.navr{display:flex;gap:10px;align-items:center}
+.lang{display:flex;border:1.5px solid var(--line);border-radius:3px;overflow:hidden}
+.lang button{all:unset;cursor:pointer;padding:9px 11px;font-family:var(--label);font-weight:700;font-size:14px;line-height:1;color:var(--muted)}
+.lang button[lang="ar"]{font-family:"Cairo",sans-serif;font-size:15px}
+.lang button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.lang button:focus-visible{outline:3px solid var(--red2);outline-offset:-3px}
+.hero h1,.mat h3,.ghostword,.ticker .t,.mono span{font-family:var(--brand)!important;font-weight:400!important}
+.ticker{direction:ltr}
+.tm,bdi{unicode-bidi:isolate}
+.live b{font-weight:inherit}
+html[lang="ar"]{--display:"Cairo",sans-serif;--body:"Cairo",system-ui,sans-serif;--label:"Cairo",sans-serif;--dw:900}
+html[lang="ar"] body{font-size:17px}
+html[lang="ar"] *{letter-spacing:0!important}
+html[lang="ar"] h2.big{font-size:clamp(34px,7vw,88px)}
+h2.big,.nm,.kidtable span,.kidtable b{overflow-wrap:anywhere;min-width:0}
+html[lang="ar"] h2.big,html[lang="ar"] .disc h2,html[lang="ar"] .qcard h3,html[lang="ar"] .rtop h3{line-height:1.2}
+html[lang="ar"] .cname b,html[lang="ar"] .reel h3,html[lang="ar"] .oth b,html[lang="ar"] footer .motto{line-height:1.3}
+html[lang="ar"] .hero .copy .lab,html[lang="ar"] .lab{font-size:14px}
+@media (max-width:440px){.nav .cta{padding:9px 11px;font-size:13px}}
+.rtop>*,.rside>*{min-width:0}
+.hero .btns .cta,.hero .btns .ghost,.result .cta{white-space:normal}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.ticker .t{transform:none}.radar .streets path{stroke-dashoffset:0}}
+</style>
+<style>body{margin:0}[hidden]{display:none!important}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}</style>
+</head>
+<body>
+
+
+<style>
+.wm{position:fixed;inset:0;z-index:9999;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='420' height='260'%3E%3Ctext x='210' y='130' text-anchor='middle' dominant-baseline='middle' transform='rotate(-28 210 130)' font-family='Arial,sans-serif' font-size='22' font-weight='700' fill='rgba(255,255,255,0.16)'%3ECe site est cr%C3%A9%C3%A9 par Otmane%3C/text%3E%3C/svg%3E");background-repeat:repeat}
+.wmbar{position:fixed;left:0;right:0;bottom:0;z-index:10000;pointer-events:none;background:rgba(227,38,28,.92);color:#fff;text-align:center;font:700 14px/1.2 Arial,sans-serif;letter-spacing:.06em;padding:10px max(16px,env(safe-area-inset-left,0px)) calc(10px + env(safe-area-inset-bottom,0px))}
+</style>
+<div class="wm" aria-hidden="true"></div>
+<div class="wmbar">CE SITE EST CRÉÉ PAR OTMANE · VERSION DE DÉMONSTRATION</div>
+<nav class="nav gut">
+  <div class="wrap in">
+    <a class="brand" href="#top"><img src="media/logo.png" alt="The Art Kings"><span>The Art Kings</span></a>
+    <div class="links"><a href="#riyadat" data-i="nDisc"></a><a href="#nsa" data-i="nWomen"></a><a href="#drari" data-i="nKids"></a><a href="#planning" data-i="nPlan"></a><a href="#test" data-i="nTest"></a><a href="#blassa" data-i="nLoc"></a></div>
+    <div class="navr">
+      <a class="cta" href="#test" data-i="navCta"></a>
+      <div class="lang" role="group" aria-label="Langue / اللغة"><button id="lang-fr" data-l="fr" lang="fr">FR</button><button id="lang-ar" data-l="ar" lang="ar">ع</button></div>
+    </div>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <canvas id="octa" aria-hidden="true"></canvas>
+  <div class="copy gut">
+    <div class="wrap">
+      <div class="lab" data-i="heroLab"></div>
+      <h1 dir="ltr">The <span class="o">Art</span><br><span class="r">Kings</span></h1>
+      <div class="row">
+        <p data-i="heroP"></p>
+        <div class="btns"><a class="cta" href="#test" data-i="heroCta"></a><a class="ghost" href="#planning" data-i="heroPlan"></a></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="ticker" aria-hidden="true"><div class="t" id="tick"></div></div>
+
+<section class="gut" id="riyadat" style="padding-block:80px 30px">
+  <div class="wrap">
+    <div class="lab" data-i="matsLab"></div>
+    <h2 class="big" data-i="matsH"></h2>
+    <div class="mats">
+      <a class="mat w" href="#bjj"><span class="k" data-i="matWk"></span><h3 dir="ltr">White <span>Mat</span></h3><div class="pills"><b>BJJ</b><b>Judo</b><b>MMA</b><b>Wrestling</b></div></a>
+      <a class="mat b" href="#kick"><span class="k" data-i="matBk"></span><h3 dir="ltr">Black <span>Mat</span></h3><div class="pills"><b>Kickboxing</b><b>Boxing</b><b>Cross training</b><b>Aerobic</b></div></a>
+    </div>
+  </div>
+</section>
+
+<div id="discs"></div>
+
+<section class="band women gut" id="nsa">
+  <div class="wrap">
+    <div class="lab" style="color:#ff5ad7" data-i="wLab"></div>
+    <h2 class="big" data-i="wH"></h2>
+    <p class="sub" data-i="wSub"></p>
+    <div class="reelrow">
+      <div class="reel"><div class="vframe v"><span class="live"><i></i><b data-i="wBjj"></b></span><video class="auto" muted loop playsinline preload="none" poster="media/bjjwomen.jpg" src="media/bjjwomen.mp4"></video></div><h3 data-i="wBjj"></h3><div class="slots" data-prog="bjjw"></div></div>
+      <div class="reel"><div class="vframe v"><span class="live"><i></i><b data-i="wAeroS"></b></span><video class="auto" muted loop playsinline preload="none" poster="media/aerobic.jpg" src="media/aerobic.mp4"></video></div><h3 data-i="wAero"></h3><div class="slots" data-prog="aero"></div></div>
+      <div class="reel"><div class="mono"><div class="sweep"></div><span>M</span><small data-i="wCoach"></small></div><h3 data-i="wCoach"></h3><p class="desc" style="font-size:15px" data-i="wCoachD"></p></div>
+    </div>
+  </div>
+</section>
+
+<section class="band kids gut" id="drari">
+  <div class="wrap">
+    <div class="lab" style="color:#e6f01a" data-i="kLab"></div>
+    <h2 class="big" data-i="kH"></h2>
+    <p class="sub" data-i="kSub"></p>
+    <div class="reelrow">
+      <div class="reel"><div class="vframe v"><span class="live"><i></i><b data-i="kJudo"></b></span><video class="auto" muted loop playsinline preload="none" poster="media/judokids.jpg" src="media/judokids.mp4"></video></div><h3 data-i="kJudo"></h3></div>
+      <div class="reel"><div class="vframe v"><span class="live"><i></i><b data-i="kComp"></b></span><video class="auto" muted loop playsinline preload="none" poster="media/kidscomp.jpg" src="media/kidscomp.mp4"></video></div><h3 data-i="kComp"></h3></div>
+      <div class="reel"><div class="kidtable" id="kidtable"></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="plan gut" id="planning">
+  <div class="wrap">
+    <div class="lab" data-i="pLab"></div>
+    <h2 class="big" data-i="pH"></h2>
+    <div class="ctrl" id="days" role="group"></div>
+    <div class="ctrl filters" id="filters" role="group"></div>
+    <div class="sessions" id="sessions"></div>
+  </div>
+</section>
+
+<section class="quiz gut" id="test">
+  <div class="wrap">
+    <div class="lab" data-i="qLab"></div>
+    <h2 class="big" data-i="qH"></h2>
+    <p class="sub" data-i="qSub"></p>
+    <div id="quiz"></div>
+  </div>
+</section>
+
+<section class="loc gut" id="blassa">
+  <div class="wrap">
+    <div class="lab" data-i="lLab"></div>
+    <h2 class="big" data-i="lH"></h2>
+    <div class="locgrid">
+      <div class="radar" aria-hidden="true">
+        <svg viewBox="0 0 400 400" class="streets">
+          <path d="M0 140 L400 120"/><path d="M0 265 L400 290" style="animation-delay:.2s"/><path d="M120 0 L150 400" style="animation-delay:.4s"/><path d="M270 0 L250 400" style="animation-delay:.6s"/>
+          <path d="M0 40 Q200 210 400 360" style="animation-delay:.8s"/><path d="M40 400 Q220 220 400 60" style="animation-delay:1s"/>
+          <circle cx="200" cy="200" r="190" fill="none" stroke="#2b2b30"/><circle cx="200" cy="200" r="120" fill="none" stroke="#222226"/><circle cx="200" cy="200" r="55" fill="none" stroke="#222226"/>
+        </svg>
+        <div class="scan"></div>
+        <div class="wave"></div><div class="wave"></div><div class="wave"></div>
+        <div class="pin"><svg viewBox="0 0 24 24"><path fill="#e3261c" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7z"/><circle cx="12" cy="9" r="2.6" fill="#fff"/></svg></div>
+      </div>
+      <div>
+        <p class="sub" style="margin-top:0" data-i="lSub"></p>
+        <div class="hours">
+          <div><b data-i="h1k"></b><span data-i="h1v"></span></div>
+          <div><b data-i="h2k"></b><span><bdi>07:00</bdi> (BJJ No Gi)</span></div>
+          <div><b data-i="h3k"></b><span><bdi>22:30</bdi> (Wrestling · BJJ)</span></div>
+          <div><b data-i="h4k"></b><span data-i="h4v"></span></div>
+        </div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+          <a class="cta" href="https://maps.app.goo.gl/qhDJZx3f9BHbyyd77" target="_blank" rel="noopener" data-i="lMaps"></a>
+          <a class="ghost" href="https://www.instagram.com/theartkingsacademy/" target="_blank" rel="noopener">Instagram</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="gut">
+  <div class="wrap in">
+    <span class="motto" data-i="motto"></span>
+    <a href="https://www.instagram.com/theartkingsacademy/" target="_blank" rel="noopener" dir="ltr">@theartkingsacademy</a>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+let lang="fr";
+try{const s=localStorage.getItem("ak-lang");if(s==="fr"||s==="ar")lang=s;else if((navigator.language||"").startsWith("ar"))lang="ar"}catch(e){}
+
+const T={
+fr:{nDisc:"Disciplines",nWomen:"Femmes",nKids:"Enfants",nPlan:"Planning",nTest:"Test",nLoc:"Accès",navCta:"Faire le test",
+ heroLab:"Académie · Grappling · Striking · Cross training",heroP:"Discipline builds freedom. 8 disciplines, deux tatamis et des coachs qui vous suivent dès la première séance.",heroCta:"Faire le test (2 min)",heroPlan:"Voir le planning",
+ matsLab:"Deux tatamis, deux univers",matsH:"Choisissez votre tatami",matWk:"Zone grappling & arts martiaux",matBk:"Zone cross training & striking",
+ wLab:"100% Femmes",wH:"L'espace femmes",wSub:"Des cours réservés aux femmes avec la coach Maroua : le BJJ pour apprendre à se défendre par la technique, l'aérobic pour garder la forme dans une ambiance détendue.",wBjj:"BJJ Femmes",wAeroS:"Aérobic",wAero:"Aérobic 100% Femmes",wCoach:"Coach Maroua",wCoachD:"Elle encadre les cours femmes sur le White Mat et le Black Mat.",
+ kLab:"Enfants · 4 – 15 ans",kH:"Nos enfants",kSub:"Judo dès 4 ans, BJJ Kids et Kickboxing Kids. Chaque tranche d'âge a son cours, le mercredi et le samedi.",kJudo:"Judo Enfants",kComp:"Compétition",kAll:"Enfants",
+ pLab:"Lundi → Samedi",pH:"Planning",fAll:"Tout",fWhite:"White Mat",fBlack:"Black Mat",fWomen:"Femmes",fKids:"Enfants",empty:"Aucun cours ce jour avec ce filtre.",
+ qLab:"Test · 8 questions",qH:"Quel sport de combat est fait pour vous ?",qSub:"Répondez franchement. Nous vous proposons un sport de la salle, avec le coach qui vous accompagnera et les horaires des cours.",
+ lLab:"Localisation",lH:"Où nous trouver ?",lSub:"The Art Kings Academy. Ouvrez Google Maps pour l'itinéraire depuis chez vous. Les horaires de chaque discipline sont dans le <a href=\"#planning\">planning</a>.",
+ h1k:"Cours",h1v:"Lundi → Samedi",h2k:"Premier cours",h3k:"Dernier cours",h4k:"Dimanche",h4v:"Pas de cours",lMaps:"Ouvrir dans Google Maps",motto:"Plus qu'une salle, une communauté",
+ days:["Lundi","Mardi","Mercredi","Jeudi","Vendredi","Samedi"],and:"&",yrs:"ans",white:"White Mat",black:"Black Mat",yourCoach:"Votre coach",yourCoachF:"Votre coach",sound:"Activer le son",
+ qn:(a,b)=>`Question ${a} / ${b}`,pick:"Choisissez une réponse pour continuer",back:"← Retour",
+ rLab:"Le sport fait pour vous",rLabK:"Le sport idéal pour votre enfant",match:"compatibilité",others:"Autres sports qui vous correspondent",book:"Réserver une séance d'essai sur Instagram",again:"Refaire le test",withYou:"Votre coach",
+ coach:(n,f)=>"Coach "+n},
+ar:{nDisc:"الرياضات",nWomen:"النساء",nKids:"الأطفال",nPlan:"البرنامج",nTest:"الاختبار",nLoc:"الموقع",navCta:"ابدأ الاختبار",
+ heroLab:"أكاديمية · قتال أرضي · ضربات · كروس ترينينغ",heroP:"الانضباط يصنع الحرية. 8 رياضات، بساطان، ومدربون يرافقونك منذ الحصة الأولى.",heroCta:"ابدأ الاختبار (دقيقتان)",heroPlan:"شاهد البرنامج",
+ matsLab:"بساطان، عالمان",matsH:"اختر بساطك",matWk:"منطقة القتال الأرضي والفنون القتالية",matBk:"منطقة الكروس ترينينغ والضربات",
+ wLab:"100% نساء",wH:"فضاء النساء",wSub:"حصص خاصة بالنساء مع المدربة مروة: الجيو جيتسو لتتعلمي الدفاع عن نفسك بالتقنية، والإيروبيك للحفاظ على لياقتك في جو مريح.",wBjj:"جيو جيتسو للنساء",wAeroS:"إيروبيك",wAero:"إيروبيك 100% نساء",wCoach:"المدربة مروة",wCoachD:"تشرف على حصص النساء في البساط الأبيض والبساط الأسود.",
+ kLab:"الأطفال · من 4 إلى 15 سنة",kH:"أطفالنا",kSub:"جودو ابتداءً من 4 سنوات، وجيو جيتسو وكيك بوكسينغ للأطفال. لكل فئة عمرية حصتها، يومي الأربعاء والسبت.",kJudo:"جودو الأطفال",kComp:"المنافسات",kAll:"أطفال",
+ pLab:"من الإثنين إلى السبت",pH:"البرنامج الأسبوعي",fAll:"الكل",fWhite:"البساط الأبيض",fBlack:"البساط الأسود",fWomen:"النساء",fKids:"الأطفال",empty:"لا توجد حصص في هذا اليوم بهذا الاختيار.",
+ qLab:"اختبار · 8 أسئلة",qH:"أي رياضة قتالية تناسبك؟",qSub:"أجب بصراحة. سنقترح عليك رياضة من رياضات القاعة، مع المدرب الذي سيرافقك ومواعيد الحصص.",
+ lLab:"الموقع",lH:"أين تجدنا؟",lSub:"أكاديمية The Art Kings. افتح خرائط Google لمعرفة الطريق من مكانك. مواعيد كل رياضة موجودة في <a href=\"#planning\">البرنامج</a>.",
+ h1k:"الحصص",h1v:"من الإثنين إلى السبت",h2k:"أول حصة",h3k:"آخر حصة",h4k:"الأحد",h4v:"لا توجد حصص",lMaps:"افتح في خرائط Google",motto:"أكثر من قاعة، مجتمع",
+ days:["الإثنين","الثلاثاء","الأربعاء","الخميس","الجمعة","السبت"],and:"و",yrs:"سنة",white:"البساط الأبيض",black:"البساط الأسود",yourCoach:"مدربك",yourCoachF:"مدربتك",sound:"تشغيل الصوت",
+ qn:(a,b)=>`السؤال ${a} / ${b}`,pick:"اختر إجابة للمتابعة",back:"رجوع →",
+ rLab:"الرياضة التي تناسبك",rLabK:"الرياضة المثالية لطفلك",match:"توافق",others:"رياضات أخرى تناسبك",book:"احجز حصة تجريبية عبر إنستغرام",again:"أعد الاختبار",withYou:"سيرافقك",
+ coach:(n,f)=>(f?"المدربة ":"المدرب ")+n}
+};
+const t=k=>T[lang][k];
+const L=o=>o==null?"":(typeof o==="string"?o:o[lang]);
+
+const C={zaid:{fr:"Zaid",ar:"زيد"},anass:{fr:"Anass",ar:"أنس"},abdelhadi:{fr:"Abdelhadi",ar:"عبد الهادي"},mahrane:{fr:"Mahrane",ar:"مهران"},yassine:{fr:"Yassine",ar:"ياسين"},reda:{fr:"Reda",ar:"رضا"},maroua:{fr:"Maroua",ar:"مروة",f:1}};
+const coachName=k=>t("coach")(L(C[k]),C[k].f);
+
+const P={
+ bjj:{gw:"BJJ",mat:"white",c:"#ff3b5c",coach:"zaid",img:"c-zaid.webp",vid:"bjj",
+  name:{fr:"Jiu-Jitsu Brésilien",ar:"الجيو جيتسو البرازيلي"},short:{fr:"BJJ",ar:"جيو جيتسو"},
+  tag:{fr:"La technique bat la force",ar:"التقنية تغلب القوة"},
+  desc:{fr:"Un art du sol : vous apprenez à contrôler votre adversaire par la technique plutôt que par la force, et à finir par clé ou étranglement. Cours Gi (en kimono) et No Gi, du débutant au niveau avancé.",ar:"فن قتالي على الأرض: تتعلم السيطرة على خصمك بالتقنية لا بالقوة، وإنهاء النزال بالمفاتيح أو الخنق. حصص بالكيمونو (Gi) وبدونه (No Gi)، من المبتدئ إلى المتقدم."}},
+ judo:{gw:"Judo",mat:"white",c:"#4f63ff",coach:"anass",img:"c-anass.webp",vid:"judo",
+  name:{fr:"Judo",ar:"الجودو"},tag:{fr:"Le souple domine le fort",ar:"المرونة تغلب القوة"},
+  desc:{fr:"Discipline olympique : projeter l'adversaire grâce à l'équilibre et à la technique. On apprend à chuter sans se blesser, dans le respect et la rigueur.",ar:"رياضة أولمبية: إسقاط الخصم بالتوازن والتقنية. تتعلم السقوط دون إصابة، في جو من الانضباط والاحترام."}},
+ mma:{gw:"MMA",mat:"white",c:"#d63a48",coach:"abdelhadi",img:"c-mma.webp",vid:"mma",
+  name:{fr:"MMA",ar:"الفنون القتالية المختلطة"},short:{fr:"MMA",ar:"MMA"},tag:{fr:"Tout en un",ar:"كل شيء في رياضة واحدة"},
+  desc:{fr:"Striking, lutte et sol dans la même séance. Pour celles et ceux qui veulent être complets, prêts à toute situation, ou viser la compétition.",ar:"ضربات ومصارعة وقتال أرضي في نفس الحصة. لمن يريد أن يكون متكاملاً ومستعداً لأي موقف، أو يطمح للمنافسات."}},
+ wrest:{gw:"Wrestling",mat:"white",c:"#ff8a3d",coach:"mahrane",img:"c-mahrane.webp",vid:"wrestling",
+  name:{fr:"Lutte",ar:"المصارعة"},tag:{fr:"Projeter et contrôler",ar:"الإسقاط والسيطرة"},
+  desc:{fr:"Force, cardio et takedowns. La lutte est la base de nombreux champions de MMA et forge un physique solide.",ar:"قوة وتحمل وإسقاطات. المصارعة أساس عدد كبير من أبطال MMA، وتبني جسماً صلباً."}},
+ kick:{gw:"Kickboxing",mat:"black",c:"#ffb347",coach:"yassine",img:"c-yassine.webp",vid:"kick",
+  name:{fr:"Kickboxing",ar:"الكيك بوكسينغ"},tag:{fr:"Poings et pieds",ar:"اللكمات والركلات"},
+  desc:{fr:"Les poings et les jambes en même temps. Cardio intense, souplesse et confiance en soi. Six séances par semaine, il y a toujours un cours.",ar:"اللكمات والركلات في آن واحد. لياقة قوية ومرونة وثقة بالنفس. ست حصص في الأسبوع، فهناك دائماً حصة."}},
+ box:{gw:"Boxing",mat:"black",c:"#ff5a36",coach:"reda",img:"c-reda.webp",vid:"boxing",
+  name:{fr:"Boxe anglaise",ar:"الملاكمة"},tag:{fr:"Le noble art",ar:"الفن النبيل"},
+  desc:{fr:"L'art des poings et des appuis. Réflexes, vitesse et cardio, et vous apprenez à vous défendre debout.",ar:"فن اللكمات وحركة القدمين. ردود فعل وسرعة ولياقة، وتتعلم الدفاع عن نفسك وقوفاً."}},
+ cross:{gw:"Cross Training",mat:"black",c:"#48d34a",coach:"anass",img:"c-anass.webp",vid:"cross",
+  name:{fr:"Cross Training",ar:"الكروس ترينينغ"},tag:{fr:"45 minutes intenses",ar:"45 دقيقة مكثفة"},
+  desc:{fr:"Entraînement fonctionnel : force, cardio et endurance en 45 minutes. Idéal seul, ou juste avant le kickboxing le même soir.",ar:"تدريب وظيفي: قوة ولياقة وتحمل في 45 دقيقة. مثالي وحده، أو قبل حصة الكيك بوكسينغ في نفس المساء."}},
+ aero:{mat:"black",c:"#ff5ad7",coach:"maroua",vid:"aerobic",v:1,
+  name:{fr:"Aérobic 100% Femmes",ar:"إيروبيك 100% نساء"},short:{fr:"Aérobic",ar:"إيروبيك"},tag:{fr:"Cardio en musique",ar:"لياقة على إيقاع الموسيقى"},
+  desc:{fr:"Du cardio en musique dans une ambiance 100% féminine. Idéal pour perdre du poids et garder la forme, sans contact.",ar:"تمارين لياقة على الموسيقى في جو نسائي 100%. مثالية لإنقاص الوزن والحفاظ على اللياقة، دون احتكاك."}},
+ bjjw:{mat:"white",c:"#ff2bc2",coach:"maroua",vid:"bjjwomen",v:1,
+  name:{fr:"BJJ Femmes",ar:"جيو جيتسو للنساء"},tag:{fr:"Apprendre à se défendre",ar:"تعلّمي الدفاع عن نفسك"},
+  desc:{fr:"Du BJJ réservé aux femmes : se défendre par la technique, dans un groupe bienveillant. Les cours de BJJ mixtes vous sont aussi ouverts.",ar:"جيو جيتسو خاص بالنساء: الدفاع عن النفس بالتقنية ضمن مجموعة ودودة. حصص الجيو جيتسو المختلطة مفتوحة لك أيضاً."}},
+ judok:{mat:"white",c:"#19d3ea",coach:"anass",img:"c-anass.webp",vid:"judokids",v:1,
+  name:{fr:"Judo Enfants",ar:"جودو الأطفال"},tag:{fr:"De 4 à 15 ans",ar:"من 4 إلى 15 سنة"},
+  desc:{fr:"Le judo pour les enfants : chaque tranche d'âge a son cours. Ils apprennent le respect, l'équilibre et à tomber sans se faire mal.",ar:"الجودو للأطفال: لكل فئة عمرية حصتها. يتعلمون الاحترام والتوازن والسقوط دون أذى."}},
+ bjjk:{mat:"white",c:"#6bd12c",coach:"zaid",img:"c-zaid.webp",vid:"kidscomp",v:1,
+  name:{fr:"BJJ Enfants",ar:"جيو جيتسو الأطفال"},tag:{fr:"10 – 15 ans",ar:"من 10 إلى 15 سنة"},
+  desc:{fr:"Le BJJ pour les 10-15 ans. Confiance en soi et self-défense sans coups, très utile face au harcèlement.",ar:"الجيو جيتسو للأطفال من 10 إلى 15 سنة. ثقة بالنفس ودفاع عن النفس دون ضرب، مفيد جداً ضد التنمر."}},
+ kickk:{mat:"black",c:"#e6f01a",coach:"yassine",img:"c-yassine.webp",vid:"kick",
+  name:{fr:"Kickboxing Enfants",ar:"كيك بوكسينغ الأطفال"},tag:{fr:"Canaliser l'énergie",ar:"تفريغ الطاقة"},
+  desc:{fr:"Le kickboxing pour les enfants : ils dépensent leur énergie, développent cardio et confiance, avec protections et dans un cadre structuré.",ar:"الكيك بوكسينغ للأطفال: يفرغون طاقتهم وينمّون لياقتهم وثقتهم بأنفسهم، مع الواقيات وفي إطار منظم."}}
+};
+/* [day(0=Mon), start, end, program, label (null = program name), age] */
+const S=[
+ [1,"07:00","08:00","bjj","BJJ No Gi"],[3,"07:00","08:00","bjj","BJJ No Gi"],[5,"12:00","13:30","bjj","BJJ No Gi"],
+ [2,"13:45","14:30","judok",null,"4–6"],[5,"13:45","14:30","judok",null,"4–6"],
+ [2,"14:30","15:30","judok",null,"7–10"],[5,"14:30","15:30","judok",null,"7–10"],
+ [2,"15:30","16:30","judok",null,"11–15"],[5,"15:30","16:30","judok",null,"11–15"],
+ [2,"16:30","17:30","bjjk",null,"10–15"],[5,"16:30","17:30","bjjk",null,"10–15"],
+ [0,"17:30","18:30","bjj","BJJ Gi Advanced"],[4,"17:30","18:30","bjj","BJJ Gi Advanced"],
+ [2,"17:30","18:30","bjjw",null],[5,"17:30","18:30","bjjw","Open Class"],
+ [0,"18:30","19:30","bjj","BJJ Gi"],[2,"18:30","19:30","bjj","BJJ Gi"],[4,"18:30","19:30","bjj","BJJ Gi"],
+ [1,"18:30","19:30","bjj","BJJ No Gi Advanced"],[3,"18:30","19:30","bjj","BJJ No Gi Advanced"],[5,"18:30","19:30","bjj","BJJ No Gi Advanced"],
+ [0,"19:30","21:00","mma",null],[2,"19:30","21:00","mma",null],[4,"19:30","21:00","mma",null],
+ [1,"19:30","21:00","judo",null],[3,"19:30","21:00","judo",null],[5,"19:30","21:00","judo",null],
+ [0,"21:00","22:30","wrest",null],[2,"21:00","22:30","wrest",null],[4,"21:00","22:30","wrest",null],
+ [1,"21:00","22:30","bjj","BJJ No Gi"],[3,"21:00","22:30","bjj","BJJ No Gi"],
+ [2,"16:00","17:00","kickk",null],[5,"16:00","17:00","kickk",null],
+ [0,"17:00","18:00","aero",null],[2,"17:00","18:00","aero",null],[4,"17:00","18:00","aero",null],
+ [0,"18:30","20:00","kick",null],[2,"18:30","20:00","kick",null],[4,"18:30","20:00","kick",null],
+ [1,"18:30","19:15","cross",null],[3,"18:30","19:15","cross",null],[5,"18:30","19:15","cross",null],
+ [1,"19:15","20:45","kick",null],[3,"19:15","20:45","kick",null],[5,"19:15","20:45","kick",null],
+ [0,"20:00","21:30","box",null],[2,"20:00","21:30","box",null],[4,"20:00","21:30","box",null]
+];
+const ICON_OFF='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="m22 9-6 6M16 9l6 6"/></svg>';
+const ICON_ON='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M19 5a10 10 0 0 1 0 14"/></svg>';
+const tm=(a,b)=>`<bdi dir="ltr">${a}–${b}</bdi>`;
+const sessLabel=s=>{let l=s[4]?s[4]:L(P[s[3]].name);if(s[4]==="Open Class")l=L(P[s[3]].name)+" · Open Class";if(s[5])l+=` · <bdi dir="ltr">${s[5]}</bdi> ${t("yrs")}`;return l};
+const matLabel=m=>t(m);
+
+function slots(prog){
+  const g={};S.filter(s=>s[3]===prog).forEach(s=>{const k=s[1]+"|"+s[2]+"|"+(s[4]||"")+"|"+(s[5]||"");(g[k]=g[k]||{s,ds:[]}).ds.push(s[0])});
+  return Object.values(g).sort((a,b)=>a.s[1].localeCompare(b.s[1])).map(({s,ds})=>({days:ds.sort().map(d=>t("days")[d]).join(" · "),time:tm(s[1],s[2]),lab:(s[4]||s[5])?sessLabel(s):""}));
+}
+const slotHTML=prog=>slots(prog).map(x=>`<span class="slot"><em>${x.days}</em>${x.time}${x.lab?` · ${x.lab}`:""}</span>`).join("");
+function coachHTML(p){
+  if(!p.img)return `<div class="mono" style="height:100%;width:auto;aspect-ratio:3/4;margin:0 auto"><div class="sweep"></div><span style="font-size:150px">${C[p.coach].fr[0]}</span><small>${coachName(p.coach)}</small></div>`;
+  return `<div class="ring"></div><img src="media/${p.img}" alt="${coachName(p.coach)}" loading="lazy"><div class="floor"></div>`;
+}
+const videoHTML=p=>`<div class="vframe${p.v?" v":""}"><span class="live"><i></i>${L(p.short||p.name)}</span><video class="auto" muted loop playsinline preload="none" poster="media/${p.vid}.jpg" src="media/${p.vid}.mp4"></video></div>`;
+
+/* video: autoplay muted when in view, pause when out */
+const vio=new IntersectionObserver(es=>es.forEach(e=>{const v=e.target;if(e.isIntersecting&&e.intersectionRatio>=.45){v.play().catch(()=>{})}else{v.pause()}}),{threshold:[0,.45,.8]});
+function wireVideos(){
+  vio.disconnect();
+  document.querySelectorAll("video.auto").forEach(v=>{
+    const f=v.parentElement;let b=f.querySelector(".snd");
+    if(!b){b=document.createElement("button");b.className="snd";b.innerHTML=ICON_OFF;f.appendChild(b);
+      b.onclick=()=>{const on=v.muted;document.querySelectorAll("video").forEach(o=>{o.muted=true;const sb=o.parentElement.querySelector(".snd");if(sb)sb.innerHTML=ICON_OFF});
+        v.muted=!on;b.innerHTML=on?ICON_ON:ICON_OFF;if(on)v.play().catch(()=>{})}}
+    b.setAttribute("aria-label",t("sound"));vio.observe(v)});
+}
+
+/* discipline sections */
+const ORDER=["bjj","judo","mma","wrest","kick","box","cross"];
+let firstRender=true;
+function drawDiscs(){
+  document.getElementById("discs").innerHTML=ORDER.map(k=>{const p=P[k];return `
+<section class="disc gut" id="${k}" style="--c:${p.c}">
+  <div class="ghostword" aria-hidden="true" dir="ltr">${p.gw}</div>
+  <div class="wrap grid">
+    <div class="head"><div><div class="lab" style="color:${p.c}">${L(p.tag)}</div><h2>${L(p.name)}</h2></div><span class="matbadge ${p.mat}">${matLabel(p.mat)}</span></div>
+    <div class="rv">${videoHTML(p)}</div>
+    <div class="coachcol"><div class="coach rv tilt">${coachHTML(p)}</div>
+      <div class="cname"><small>${C[p.coach].f?t("yourCoachF"):t("yourCoach")}</small><b>${L(C[p.coach])}</b></div></div>
+    <div class="info"><p class="desc">${L(p.desc)}</p><div class="slots">${slotHTML(k)}</div></div>
+  </div>
+</section>`}).join("");
+  if(firstRender){firstRender=false;requestAnimationFrame(()=>document.querySelectorAll("#discs .rv").forEach(el=>{const r=el.getBoundingClientRect();if(r.top>innerHeight){el.classList.add("pre");rio.observe(el)}}))}
+}
+const rio=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.remove("pre");rio.unobserve(e.target)}}),{threshold:.15});
+
+function drawKids(){
+  const rows=[["4–6","judok","13:45","14:30"],["7–10","judok","14:30","15:30"],["11–15","judok","15:30","16:30"],["10–15","bjjk","16:30","17:30"],[t("kAll"),"kickk","16:00","17:00"]];
+  const d=t("days");
+  document.getElementById("kidtable").innerHTML=rows.map(r=>`<div><b><bdi>${r[0]}</bdi></b><span>${L(P[r[1]].name)} · ${d[2]} ${t("and")} ${d[5]} ${tm(r[2],r[3])}</span></div>`).join("");
+}
+
+/* planning */
+let day=Math.min(Math.max(new Date().getDay()-1,0),5),mat="all";const todayIdx=new Date().getDay()-1;
+function drawPlan(){
+  const d=t("days");
+  document.getElementById("days").innerHTML=d.map((n,i)=>`<button class="tab" id="day${i}" aria-pressed="${i===day}" data-d="${i}">${n}${i===todayIdx?'<span class="today"></span>':""}</button>`).join("");
+  document.getElementById("filters").innerHTML=[["all","fAll"],["white","fWhite"],["black","fBlack"],["nsa","fWomen"],["kids","fKids"]].map(([k,l])=>`<button class="tab" id="f-${k}" aria-pressed="${k===mat}" data-m="${k}">${t(l)}</button>`).join("");
+  const list=S.filter(s=>s[0]===day).filter(s=>{const p=s[3];if(mat==="all")return true;if(mat==="nsa")return p==="bjjw"||p==="aero";if(mat==="kids")return /k$/.test(p);return P[p].mat===mat}).sort((a,b)=>a[1].localeCompare(b[1]));
+  document.getElementById("sessions").innerHTML=list.length?list.map(s=>{const p=P[s[3]];return `<div class="sess" style="--c:${p.c}"><span class="tm">${tm(s[1],s[2])}</span><span class="bar"></span><span class="nm">${sessLabel(s)}<small>${coachName(p.coach)}</small></span><span class="matbadge ${p.mat}">${matLabel(p.mat)}</span></div>`}).join(""):`<p class="empty">${t("empty")}</p>`;
+  document.querySelectorAll("#days .tab").forEach(b=>b.onclick=()=>{day=+b.dataset.d;drawPlan()});
+  document.querySelectorAll("#filters .tab").forEach(b=>b.onclick=()=>{mat=b.dataset.m;drawPlan()});
+}
+
+/* quiz */
+const ctx={};
+const KIDMAP={judo:"judok",bjj:"bjjk",wrest:"bjjk",mma:"bjjk",kick:"kickk",box:"kickk",cross:"kickk"};
+const Q=[
+ {id:"who",q:{fr:"Qui va s'entraîner ?",ar:"من سيتدرب؟"},o:()=>[[{fr:"Moi (homme)",ar:"أنا (رجل)"},{},"m"],[{fr:"Moi (femme)",ar:"أنا (امرأة)"},{},"f"],[{fr:"Mon enfant",ar:"ابني أو ابنتي"},{},"k"]]},
+ {id:"age",q:c=>c.who==="k"?{fr:"Quel âge a votre enfant ?",ar:"كم عمر طفلك؟"}:{fr:"Quel âge avez-vous ?",ar:"كم عمرك؟"},
+  o:c=>c.who==="k"?[[{fr:"4 – 6 ans",ar:"4 – 6 سنوات"},{},"k1"],[{fr:"7 – 10 ans",ar:"7 – 10 سنوات"},{},"k2"],[{fr:"11 – 15 ans",ar:"11 – 15 سنة"},{},"k3"]]:
+   [[{fr:"16 – 25 ans",ar:"16 – 25 سنة"},{mma:2,wrest:2,kick:1,box:1,judo:1,bjj:1,cross:1}],[{fr:"26 – 40 ans",ar:"26 – 40 سنة"},{bjj:2,box:1,kick:1,cross:2,aero:1}],[{fr:"Plus de 40 ans",ar:"أكثر من 40 سنة"},{bjj:2,cross:2,aero:2,box:1}]]},
+ {id:"goal",q:c=>c.who==="k"?{fr:"Que recherchez-vous pour votre enfant ?",ar:"ماذا تريد لطفلك؟"}:{fr:"Quel est votre objectif ?",ar:"ما هو هدفك؟"},
+  o:c=>c.who==="k"?[
+   [{fr:"Discipline et respect",ar:"الانضباط والاحترام"},{judo:3,bjj:2}],[{fr:"Confiance en soi",ar:"الثقة بالنفس"},{bjj:2,kick:2,judo:1}],[{fr:"Dépenser son énergie",ar:"تفريغ طاقته"},{kick:3,judo:1,bjj:1}],[{fr:"Savoir se défendre",ar:"الدفاع عن نفسه"},{bjj:3,judo:2,kick:2}],[{fr:"La compétition",ar:"المنافسات"},{judo:2,bjj:2,kick:1}]]:[
+   [{fr:"Savoir me défendre",ar:"الدفاع عن نفسي"},{bjj:3,mma:3,kick:2,box:2,judo:2,wrest:1}],[{fr:"Perdre du poids, me remettre en forme",ar:"إنقاص الوزن واستعادة اللياقة"},{cross:3,aero:3,kick:3,box:2,mma:1,wrest:1,bjj:1}],[{fr:"Faire de la compétition",ar:"المشاركة في المنافسات"},{mma:3,bjj:2,judo:2,wrest:2,box:2,kick:2}],[{fr:"Discipline et rigueur",ar:"الانضباط والصرامة"},{judo:3,bjj:2,kick:1,box:1,wrest:1}],[{fr:"Évacuer le stress",ar:"التخلص من التوتر"},{box:3,kick:2,bjj:2,aero:2,cross:1,judo:1}]]},
+ {id:"style",q:c=>c.who==="k"?{fr:"Qu'est-ce qui l'attire le plus ?",ar:"ماذا يجذبه أكثر؟"}:{fr:"Quel type de combat vous attire ?",ar:"أي نوع من القتال يجذبك؟"},
+  o:c=>{const a=[[{fr:"Les poings",ar:"اللكمات"},{box:3,kick:1,mma:1}],[{fr:"Poings et pieds",ar:"اللكمات والركلات"},{kick:3,mma:1,box:1}],[{fr:"Le sol et les soumissions",ar:"القتال الأرضي والمفاتيح"},{bjj:3,wrest:1,judo:1,mma:1}],[{fr:"Projeter l'adversaire",ar:"إسقاط الخصم"},{judo:3,wrest:3,mma:1}],[{fr:"Un peu de tout",ar:"قليل من كل شيء"},{mma:3,bjj:1,kick:1,wrest:1}]];if(c.who!=="k")a.push([{fr:"Pas de combat, juste la forme",ar:"بدون قتال، فقط اللياقة"},{cross:3,aero:3}]);return a}},
+ {id:"contact",show:c=>c.who!=="k",q:{fr:"Acceptez-vous de prendre des coups au visage en sparring ?",ar:"هل تقبل تلقي ضربات على الوجه أثناء النزالات التدريبية؟"},
+  o:()=>[[{fr:"Non, pas du tout",ar:"لا، إطلاقاً"},{bjj:3,judo:3,wrest:3,cross:2,aero:3}],[{fr:"Un peu, avec protections",ar:"قليلاً، مع الواقيات"},{kick:1,box:1,bjj:1,judo:1,cross:1,aero:1}],[{fr:"Oui, sans problème",ar:"نعم، لا مشكلة"},{box:3,kick:3,mma:3}]]},
+ {id:"fit",show:c=>c.who!=="k",q:{fr:"Votre forme physique actuelle ?",ar:"ما مستوى لياقتك الحالي؟"},
+  o:()=>[[{fr:"Je ne fais pas de sport",ar:"لا أمارس الرياضة"},{bjj:2,aero:2,box:2,kick:1,cross:1,judo:1}],[{fr:"Moyenne",ar:"متوسط"},{kick:2,box:2,bjj:2,cross:2,judo:1,mma:1,aero:1,wrest:1}],[{fr:"Bonne",ar:"جيد"},{mma:2,wrest:2,judo:2,cross:2,kick:1,box:1}],[{fr:"Très sportif",ar:"رياضي جداً"},{wrest:3,mma:3,judo:2,cross:1}]]},
+ {id:"time",show:c=>c.who!=="k",q:{fr:"Quand êtes-vous disponible ?",ar:"متى تكون متاحاً؟"},
+  o:()=>[[{fr:"Tôt le matin (7h)",ar:"في الصباح الباكر (7:00)"},{bjj:3}],[{fr:"En journée (samedi)",ar:"خلال النهار (السبت)"},{bjj:2,judo:1}],[{fr:"Fin d'après-midi, 17h – 19h30",ar:"آخر الظهيرة، 17:00 – 19:30"},{bjj:2,kick:2,cross:2,aero:2}],[{fr:"Le soir, 19h30 – 22h30",ar:"في المساء، 19:30 – 22:30"},{mma:2,judo:2,wrest:2,box:2,kick:2,bjj:1}]]},
+ {id:"vibe",q:c=>c.who==="k"?{fr:"Son tempérament ?",ar:"كيف هي طباعه؟"}:{fr:"Votre tempérament ?",ar:"كيف هي طباعك؟"},
+  o:()=>[[{fr:"Patient et réfléchi",ar:"صبور ويفكر قبل أن يتصرف"},{bjj:3,judo:2,wrest:1}],[{fr:"Plein d'énergie",ar:"مليء بالطاقة"},{kick:3,mma:2,wrest:2,cross:2,box:1}],[{fr:"Aime la précision",ar:"يحب الدقة"},{box:3,judo:2,kick:1}],[{fr:"Aime l'intensité du combat",ar:"يحب حماس النزال"},{mma:3,box:2,wrest:2}]]}
+];
+let qi=0;const ans={};
+const vis=()=>Q.filter(q=>!q.show||q.show(ctx));
+function eligible(){if(ctx.who==="k"){return {k1:["judok"],k2:["judok","kickk"],k3:["judok","bjjk","kickk"]}[ctx.age]||["judok","bjjk","kickk"]}
+  return ctx.who==="f"?["bjjw","judo","mma","wrest","kick","box","cross","aero"]:["bjj","judo","mma","wrest","kick","box","cross"]}
+function mapKey(k){if(ctx.who==="k")return KIDMAP[k];if(ctx.who==="f"&&k==="bjj")return "bjjw";return k}
+const qText=q=>L(typeof q.q==="function"?q.q(ctx):q.q);
+function drawQuiz(){
+  const qs=vis();const box=document.getElementById("quiz");
+  if(qi>=qs.length)return result();
+  const q=qs[qi];const opts=q.o(ctx);
+  box.innerHTML=`<div class="qcard"><div class="belt">${qs.map((_,i)=>`<span style="${i<=qi?`background:${["#f3f1ee","#f2c230","#ef7d1a","#2f9e44","#1c6dd0","#7b3fb5","#7a4a26","#e3261c"][i%8]}`:""}"></span>`).join("")}</div>
+   <div class="qn">${t("qn")(qi+1,qs.length)}</div><h3>${qText(q)}</h3>
+   <div class="opts">${opts.map((o,n)=>`<button class="opt" id="q-${q.id}-${n}" aria-pressed="${ans[q.id]===n}" data-n="${n}"><span class="k">${lang==="ar"?"أبجدهوز"[n]:String.fromCharCode(65+n)}</span><span>${L(o[0])}</span></button>`).join("")}</div>
+   <div class="qnav"><button class="btn" id="qback" ${qi===0?"disabled":""}>${t("back")}</button><span class="qn" style="align-self:center">${t("pick")}</span></div></div>`;
+  box.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{const n=+b.dataset.n;ans[q.id]=n;const o=opts[n];
+    if(q.id==="who"){if(ctx.who!==o[2]){delete ans.age;delete ans.goal;delete ans.style;delete ans.vibe}ctx.who=o[2]}
+    if(q.id==="age"&&o[2])ctx.age=o[2];
+    box.querySelectorAll(".opt").forEach(x=>x.setAttribute("aria-pressed",x===b));setTimeout(()=>{qi++;drawQuiz()},200)});
+  document.getElementById("qback").onclick=()=>{if(qi>0){qi--;drawQuiz()}};
+}
+function result(){
+  const el=eligible(),sc={},mx={};el.forEach(k=>{sc[k]=0;mx[k]=0});
+  vis().forEach(q=>{const opts=q.o(ctx);
+    const per=opts.map(o=>{const m={};for(const k in o[1]){const mk=mapKey(k);if(mk in sc)m[mk]=Math.max(m[mk]||0,o[1][k])}return m});
+    el.forEach(k=>{mx[k]+=Math.max(0,...per.map(m=>m[k]||0))});
+    if(ans[q.id]!=null){const m=per[ans[q.id]];for(const k in m)sc[k]+=m[k]}});
+  const r=el.map(k=>({k,p:mx[k]?Math.round(sc[k]/mx[k]*100):100})).sort((a,b)=>b.p-a.p);
+  const w=P[r[0].k];
+  document.getElementById("quiz").innerHTML=`<div class="result" style="--c:${w.c}">
+   <div class="rtop">
+     <div>${videoHTML(w)}</div>
+     <div class="rside">
+       <div><div class="lab">${ctx.who==="k"?t("rLabK"):t("rLab")}</div><h3>${L(w.name)}</h3><div class="pct"><bdi dir="ltr">${r[0].p}%</bdi> ${t("match")} · ${L(w.tag)}</div></div>
+       <div class="coach tilt" style="--c:${w.c}">${coachHTML(w)}</div>
+       <div class="cname"><small>${C[w.coach].f?t("yourCoachF"):t("yourCoach")}</small><b>${L(C[w.coach])}</b></div>
+     </div>
+     <div style="grid-column:1/-1;display:flex;flex-direction:column;gap:12px"><p class="desc">${L(w.desc)}</p><div class="slots">${slotHTML(r[0].k)}</div></div>
+   </div>
+   ${r.length>1?`<div><div class="lab" style="margin-bottom:10px">${t("others")}</div><div class="others">${r.slice(1,3).map(x=>`<div class="oth"><b>${L(P[x.k].name)}</b><span><bdi dir="ltr">${x.p}%</bdi></span></div>`).join("")}</div></div>`:""}
+   <div style="display:flex;gap:10px;flex-wrap:wrap"><a class="cta" href="https://www.instagram.com/theartkingsacademy/" target="_blank" rel="noopener">${t("book")}</a><button class="btn" id="qagain">${t("again")}</button></div>
+  </div>`;
+  wireVideos();document.querySelectorAll("#quiz video.auto").forEach(v=>v.play().catch(()=>{}));
+  document.getElementById("qagain").onclick=()=>{for(const k in ans)delete ans[k];for(const k in ctx)delete ctx[k];qi=0;drawQuiz();document.getElementById("test").scrollIntoView()};
+}
+
+/* language */
+function applyLang(){
+  const root=document.documentElement;root.lang=lang;root.dir=lang==="ar"?"rtl":"ltr";
+  document.querySelectorAll("[data-i]").forEach(el=>{el.innerHTML=t(el.dataset.i)});
+  document.querySelectorAll(".lang button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.l===lang));
+  document.querySelectorAll(".slots[data-prog]").forEach(el=>{el.style.setProperty("--c",P[el.dataset.prog].c);el.innerHTML=slotHTML(el.dataset.prog)});
+  drawDiscs();drawKids();drawPlan();drawQuiz();wireVideos();
+}
+document.querySelectorAll(".lang button").forEach(b=>b.onclick=()=>{if(lang===b.dataset.l)return;lang=b.dataset.l;try{localStorage.setItem("ak-lang",lang)}catch(e){}applyLang()});
+document.getElementById("tick").innerHTML=[...Array(2)].map(()=>["BJJ","Judo","MMA","Wrestling","Kickboxing","Boxing","Cross training","Aerobic","Kids"].map(x=>`<span>${x}</span>`).join("")).join("");
+applyLang();
+
+/* coach tilt */
+if(!matchMedia("(prefers-reduced-motion: reduce)").matches)document.addEventListener("pointermove",e=>{document.querySelectorAll(".tilt").forEach(el=>{const r=el.getBoundingClientRect();if(r.bottom<0||r.top>innerHeight)return;
+  const x=(e.clientX-(r.left+r.width/2))/innerWidth,y=(e.clientY-(r.top+r.height/2))/innerHeight;const img=el.querySelector("img");if(img){img.style.setProperty("--ry",(x*22).toFixed(1)+"deg");img.style.setProperty("--rx",(-y*8).toFixed(1)+"deg")}})});
+
+/* 3D octagon hero */
+(function(){
+  if(!window.THREE)return;
+  const cv=document.getElementById("octa");let W=cv.clientWidth,H=cv.clientHeight;
+  const R=new THREE.WebGLRenderer({canvas:cv,antialias:true,alpha:true});R.setPixelRatio(Math.min(devicePixelRatio,1.6));R.setSize(W,H,false);
+  const scene=new THREE.Scene();scene.fog=new THREE.Fog(0x0a0a0b,14,34);
+  const cam=new THREE.PerspectiveCamera(42,W/H,.1,100);
+  const g=new THREE.Group();scene.add(g);
+  const rad=6,n=8,post=[];for(let i=0;i<n;i++){const a=i*Math.PI/4+Math.PI/8;post.push(new THREE.Vector3(Math.cos(a)*rad,0,Math.sin(a)*rad))}
+  const metal=new THREE.MeshStandardMaterial({color:0x2a2a2e,metalness:.8,roughness:.35});
+  const redm=new THREE.MeshStandardMaterial({color:0xe3261c,emissive:0x5a0905,metalness:.3,roughness:.5});
+  post.forEach(p=>{const c=new THREE.Mesh(new THREE.CylinderGeometry(.09,.09,3.1,10),metal);c.position.set(p.x,1.55,p.z);g.add(c);
+    const pad=new THREE.Mesh(new THREE.CylinderGeometry(.16,.16,.9,10),redm);pad.position.set(p.x,2.3,p.z);g.add(pad)});
+  const fence=[],h0=.25,h1=3;
+  for(let i=0;i<n;i++){const a=post[i],b=post[(i+1)%n];
+    const rail=(y)=>{const d=a.distanceTo(b);const m=new THREE.Mesh(new THREE.CylinderGeometry(.07,.07,d,8),y>2?redm:metal);m.position.set((a.x+b.x)/2,y,(a.z+b.z)/2);m.lookAt(b.x,y,b.z);m.rotateX(Math.PI/2);g.add(m)};
+    rail(h1);rail(h0);
+    const L=(u,y)=>new THREE.Vector3(a.x+(b.x-a.x)*u,y,a.z+(b.z-a.z)*u);
+    const k=12,slope=.4;
+    for(let j=-k;j<=k;j++){const ua=j/k;[1,-1].forEach(s=>{const du=s*slope;
+      let t0=du>0?(0-ua)/du:(1-ua)/du,t1=du>0?(1-ua)/du:(0-ua)/du;t0=Math.max(0,t0);t1=Math.min(1,t1);
+      if(t1-t0>.03)fence.push(L(ua+du*t0,h0+(h1-h0)*t0),L(ua+du*t1,h0+(h1-h0)*t1))})}}
+  const fg=new THREE.BufferGeometry().setFromPoints(fence);
+  g.add(new THREE.LineSegments(fg,new THREE.LineBasicMaterial({color:0x8a8a92,transparent:true,opacity:.28})));
+  const floor=new THREE.Mesh(new THREE.CircleGeometry(rad*1.08,8),new THREE.MeshStandardMaterial({color:0x111113,roughness:.9}));floor.rotation.x=-Math.PI/2;floor.rotation.z=Math.PI/8;g.add(floor);
+  const ol=new THREE.LineLoop(new THREE.BufferGeometry().setFromPoints(post.map(p=>new THREE.Vector3(p.x*.9,.02,p.z*.9))),new THREE.LineBasicMaterial({color:0xe3261c}));g.add(ol);
+  new THREE.TextureLoader().load("media/logo.png",t=>{const m=new THREE.Mesh(new THREE.CircleGeometry(1.8,48),new THREE.MeshBasicMaterial({map:t,transparent:true,opacity:.92}));m.rotation.x=-Math.PI/2;m.position.y=.03;g.add(m)});
+  const pc=700,pp=new Float32Array(pc*3);for(let i=0;i<pc;i++){pp[i*3]=(Math.random()-.5)*30;pp[i*3+1]=Math.random()*12;pp[i*3+2]=(Math.random()-.5)*30}
+  const pg=new THREE.BufferGeometry();pg.setAttribute("position",new THREE.BufferAttribute(pp,3));
+  const pts=new THREE.Points(pg,new THREE.PointsMaterial({color:0xff6a5a,size:.05,transparent:true,opacity:.7}));scene.add(pts);
+  scene.add(new THREE.AmbientLight(0xffffff,.35));
+  const sp=new THREE.SpotLight(0xffffff,1.4,40,Math.PI/5,.5);sp.position.set(0,14,0);scene.add(sp);
+  const rl=new THREE.PointLight(0xe3261c,2.2,30);rl.position.set(-8,4,6);scene.add(rl);
+  let mx=0,my=0,vis=true,t=0;
+  addEventListener("pointermove",e=>{mx=e.clientX/innerWidth-.5;my=e.clientY/innerHeight-.5});
+  new IntersectionObserver(es=>{vis=es[0].isIntersecting}).observe(cv);
+  function size(){W=cv.clientWidth;H=cv.clientHeight;R.setSize(W,H,false);cam.aspect=W/H;cam.updateProjectionMatrix()}
+  addEventListener("resize",size);
+  const still=matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function frame(){if(vis){t+=.003;g.rotation.y=still?.4:t;
+    const P=pg.attributes.position.array;if(!still)for(let i=1;i<P.length;i+=3){P[i]+=.008;if(P[i]>12)P[i]=0}pg.attributes.position.needsUpdate=true;
+    const far=W<700?17:13.5;cam.position.set(Math.sin(mx*.6)*far,6.5-my*2,Math.cos(mx*.6)*far);cam.lookAt(0,W<700?2.2:1.2,0);R.render(scene,cam)}
+    if(!still)requestAnimationFrame(frame)}
+  size();frame();if(still)R.render(scene,cam);
+})();
+</script>
+
+</body>
+</html>
